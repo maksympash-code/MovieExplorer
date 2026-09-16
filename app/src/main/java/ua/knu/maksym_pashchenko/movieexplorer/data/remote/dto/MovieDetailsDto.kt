@@ -32,7 +32,7 @@ data class MovieDetailsDto(
 
     val status: String,
 
-    val tagLine: String
+    val tagline: String
 )
 
 @Serializable
