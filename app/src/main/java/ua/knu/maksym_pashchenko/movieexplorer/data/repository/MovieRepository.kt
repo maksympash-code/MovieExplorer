@@ -1,6 +1,5 @@
 package ua.knu.maksym_pashchenko.movieexplorer.data.repository
 
-import ua.knu.maksym_pashchenko.movieexplorer.data.remote.dto.MovieListResponseDto
 import ua.knu.maksym_pashchenko.movieexplorer.domain.model.Movie
 
 interface MovieRepository {
