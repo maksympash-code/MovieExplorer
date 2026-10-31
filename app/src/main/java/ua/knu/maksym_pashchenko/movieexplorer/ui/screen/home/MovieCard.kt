@@ -23,9 +23,11 @@ import ua.knu.maksym_pashchenko.movieexplorer.domain.model.Movie
 @Composable
 fun MovieCard(
     movie: Movie,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
 ) {
     Card(
+        onClick = onClick,
         modifier = modifier.fillMaxWidth()
     ) {
         Row(

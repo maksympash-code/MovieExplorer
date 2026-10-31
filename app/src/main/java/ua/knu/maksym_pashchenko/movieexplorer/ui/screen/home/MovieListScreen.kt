@@ -14,7 +14,8 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun MovieListScreen(
-    uiState: MovieListUiState
+    uiState: MovieListUiState,
+    onMovieClick: (Int) -> Unit
 ) {
     when (uiState) {
         MovieListUiState.Loading -> {
@@ -50,7 +51,10 @@ fun MovieListScreen(
                         modifier = Modifier.padding(
                                 horizontal = 12.dp,
                                 vertical = 6.dp
-                            )
+                            ),
+                        onClick = {
+                            onMovieClick(movie.id)
+                        }
                     )
                 }
             }

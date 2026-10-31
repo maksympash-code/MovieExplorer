@@ -11,6 +11,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.CreationExtras
 import ua.knu.maksym_pashchenko.movieexplorer.data.remote.RetrofitClient
 import ua.knu.maksym_pashchenko.movieexplorer.data.repository.MovieRepositoryImpl
+import ua.knu.maksym_pashchenko.movieexplorer.ui.navigation.AppNavGraph
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.home.MovieListScreen
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.viewmodel.MovieListViewModel
 import ua.knu.maksym_pashchenko.movieexplorer.ui.theme.MovieExplorerTheme
@@ -47,7 +48,7 @@ class MainActivity : ComponentActivity() {
             MovieExplorerTheme {
                 val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-                MovieListScreen(uiState = uiState)
+                AppNavGraph(uiState = uiState)
             }
         }
     }
