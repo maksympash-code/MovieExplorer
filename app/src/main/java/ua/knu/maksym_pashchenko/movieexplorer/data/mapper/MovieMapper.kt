@@ -14,6 +14,7 @@ fun MovieDto.toMovie(): Movie {
         posterUrl = posterPath?.let {
             "$IMAGE_BASE_URL$it"
         },
-        rating = voteAverage
+        rating = voteAverage,
+        releaseYear = releaseDate.take(4).toIntOrNull()
     )
 }

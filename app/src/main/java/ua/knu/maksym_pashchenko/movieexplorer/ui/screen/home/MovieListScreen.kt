@@ -46,12 +46,13 @@ fun MovieListScreen(
                     items = uiState.movies,
                     key = { it.id }
                 ) { movie ->
-                    Column(
-                        modifier = Modifier.padding(16.dp)
-                    ) {
-                        Text(text = movie.title)
-                        Text(text = "Rating: ${movie.rating}")
-                    }
+                    MovieCard(
+                        movie = movie,
+                        modifier = Modifier.padding(
+                                horizontal = 12.dp,
+                                vertical = 6.dp
+                            )
+                    )
                 }
             }
         }
