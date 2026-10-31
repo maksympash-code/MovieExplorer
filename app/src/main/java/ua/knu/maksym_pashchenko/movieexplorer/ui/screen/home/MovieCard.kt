@@ -49,7 +49,7 @@ fun MovieCard(
                         .height(150.dp)
                 ) {
                     Text(
-                        text = "Немає пострера"
+                        text = "Немає постера"
                     )
                 }
             }
@@ -67,7 +67,7 @@ fun MovieCard(
                 )
 
                 Text(
-                    text = "⭐ ${movie.rating}/10"
+                    text = "⭐ ${"%.1f".format(movie.rating)}/10"
                 )
 
                 Text(
