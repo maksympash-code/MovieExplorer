@@ -29,7 +29,7 @@ fun MovieDetailsDto.toMovieDetails(): MovieDetails {
         posterUrl = posterPath?.let {
             "$IMAGE_BASE_URL$it"
         },
-        backdropUrl = backdropPath.let {
+        backdropUrl = backdropPath?.let {
             "$IMAGE_BASE_URL$it"
         },
         rating = voteAverage,
