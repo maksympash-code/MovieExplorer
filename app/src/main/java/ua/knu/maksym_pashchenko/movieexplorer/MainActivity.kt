@@ -12,7 +12,6 @@ import androidx.lifecycle.viewmodel.CreationExtras
 import ua.knu.maksym_pashchenko.movieexplorer.data.remote.RetrofitClient
 import ua.knu.maksym_pashchenko.movieexplorer.data.repository.MovieRepositoryImpl
 import ua.knu.maksym_pashchenko.movieexplorer.ui.navigation.AppNavGraph
-import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.home.MovieListScreen
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.viewmodel.MovieListViewModel
 import ua.knu.maksym_pashchenko.movieexplorer.ui.theme.MovieExplorerTheme
 

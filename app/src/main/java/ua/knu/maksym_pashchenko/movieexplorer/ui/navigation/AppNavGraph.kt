@@ -18,6 +18,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.details.MovieDetailsScreen
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.home.MovieListScreen
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.home.MovieListUiState
 
@@ -83,8 +84,8 @@ fun AppNavGraph(
                 backStackEntry.arguments?.getInt("movieId")
             )
 
-            PlaceholderScreen(
-                title = "Деталі фільму ID: $movieId",
+            MovieDetailsScreen(
+                movieId = movieId,
                 onBack = { navController.popBackStack() }
             )
         }
