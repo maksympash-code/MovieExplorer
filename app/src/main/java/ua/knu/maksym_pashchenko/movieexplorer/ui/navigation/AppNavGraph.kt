@@ -10,21 +10,30 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import coil3.Extras
+import ua.knu.maksym_pashchenko.movieexplorer.data.repository.MovieRepository
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.details.MovieDetailsScreen
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.home.MovieListScreen
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.home.MovieListUiState
+import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.viewmodel.MovieDetailsViewModel
 
 @Composable
 fun AppNavGraph(
-    uiState: MovieListUiState
+    uiState: MovieListUiState,
+    repository: MovieRepository
 ) {
     val navController = rememberNavController()
 
@@ -84,8 +93,35 @@ fun AppNavGraph(
                 backStackEntry.arguments?.getInt("movieId")
             )
 
+            val factory = object : ViewModelProvider.Factory {
+                override fun <T : ViewModel> create(
+                    modelClass: Class<T>,
+                    extras: CreationExtras
+                ): T {
+                    require(
+                        modelClass.isAssignableFrom(
+                            MovieDetailsViewModel::class.java
+                        )
+                    )
+
+                    @Suppress("UNCHECKED_CAST")
+                    return MovieDetailsViewModel(
+                        repository = repository,
+                        movieId = movieId
+                    ) as T
+                }
+            }
+
+            val viewmodel = ViewModelProvider(
+                backStackEntry,
+                factory
+            )[MovieDetailsViewModel::class.java]
+
+            val detailsUiState by viewmodel.uiState.collectAsStateWithLifecycle()
+
             MovieDetailsScreen(
                 movieId = movieId,
+                uiState = detailsUiState,
                 onBack = { navController.popBackStack() }
             )
         }

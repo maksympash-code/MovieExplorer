@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ua.knu.maksym_pashchenko.movieexplorer.data.repository.MovieRepository
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.home.MovieListUiState
@@ -13,7 +14,7 @@ class MovieListViewModel(
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<MovieListUiState>(MovieListUiState.Loading)
-    val uiState: StateFlow<MovieListUiState> = _uiState
+    val uiState: StateFlow<MovieListUiState> = _uiState.asStateFlow()
 
     fun loadMovies() {
 

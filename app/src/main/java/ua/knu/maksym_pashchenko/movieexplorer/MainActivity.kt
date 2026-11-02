@@ -19,6 +19,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val repository = MovieRepositoryImpl(RetrofitClient.api)
+
         val factory = object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(
                 modelClass: Class<T>,
@@ -31,9 +33,7 @@ class MainActivity : ComponentActivity() {
                 )
 
                 @Suppress("UNCHECKED_CAST")
-                return MovieListViewModel(
-                    MovieRepositoryImpl(RetrofitClient.api)
-                ) as T
+                return MovieListViewModel(repository) as T
             }
         }
 
@@ -47,7 +47,10 @@ class MainActivity : ComponentActivity() {
             MovieExplorerTheme {
                 val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-                AppNavGraph(uiState = uiState)
+                AppNavGraph(
+                    uiState = uiState,
+                    repository = repository
+                )
             }
         }
     }
