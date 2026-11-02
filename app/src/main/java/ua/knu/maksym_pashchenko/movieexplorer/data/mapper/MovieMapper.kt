@@ -33,7 +33,7 @@ fun MovieDetailsDto.toMovieDetails(): MovieDetails {
             "$IMAGE_BASE_URL$it"
         },
         rating = voteAverage,
-        releaseYear = releaseDate.take(4).toIntOrNull(),
+        releaseDate = releaseDate,
         runtimeMinutes = runtime,
         genres = genres.map { it.name },
         status = status,

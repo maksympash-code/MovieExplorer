@@ -23,7 +23,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import coil3.Extras
 import ua.knu.maksym_pashchenko.movieexplorer.data.repository.MovieRepository
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.details.MovieDetailsScreen
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.home.MovieListScreen
@@ -120,9 +119,8 @@ fun AppNavGraph(
             val detailsUiState by viewmodel.uiState.collectAsStateWithLifecycle()
 
             MovieDetailsScreen(
-                movieId = movieId,
                 uiState = detailsUiState,
-                onBack = { navController.popBackStack() }
+                onBackClick = { navController.popBackStack() }
             )
         }
 
