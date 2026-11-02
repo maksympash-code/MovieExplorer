@@ -23,4 +23,20 @@ class MovieRepositoryImpl(
             .getMovieDetails(movieId)
             .toMovieDetails()
     }
+
+    override suspend fun searchMovies(query: String): List<Movie> {
+
+        val normalizedQuery = query.trim()
+
+        if (normalizedQuery.isEmpty()) {
+            return emptyList()
+        }
+
+        return movieApi
+            .searchMovies(query = normalizedQuery)
+            .results
+            .map { movieDto ->
+                movieDto.toMovie()
+            }
+    }
 }
