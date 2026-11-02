@@ -5,8 +5,11 @@ import ua.knu.maksym_pashchenko.movieexplorer.data.remote.dto.MovieDto
 import ua.knu.maksym_pashchenko.movieexplorer.domain.model.Movie
 import ua.knu.maksym_pashchenko.movieexplorer.domain.model.MovieDetails
 
-private const val IMAGE_BASE_URL =
+private const val POSTER_BASE_URL =
     "https://image.tmdb.org/t/p/w500"
+
+private const val BACKDROP_BASE_URL =
+    "https://image.tmdb.org/t/p/w780"
 
 fun MovieDto.toMovie(): Movie {
     return Movie(
@@ -14,7 +17,7 @@ fun MovieDto.toMovie(): Movie {
         title = title,
         overview = overview,
         posterUrl = posterPath?.let {
-            "$IMAGE_BASE_URL$it"
+            "$POSTER_BASE_URL$it"
         },
         rating = voteAverage,
         releaseYear = releaseDate.take(4).toIntOrNull()
@@ -27,10 +30,10 @@ fun MovieDetailsDto.toMovieDetails(): MovieDetails {
         title = title,
         overview = overview,
         posterUrl = posterPath?.let {
-            "$IMAGE_BASE_URL$it"
+            "$POSTER_BASE_URL$it"
         },
         backdropUrl = backdropPath?.let {
-            "$IMAGE_BASE_URL$it"
+            "$BACKDROP_BASE_URL$it"
         },
         rating = voteAverage,
         releaseDate = releaseDate,
