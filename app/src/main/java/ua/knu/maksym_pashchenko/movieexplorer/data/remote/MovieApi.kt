@@ -10,13 +10,13 @@ interface MovieApi {
 
     @GET("movie/popular")
     suspend fun getPopularMovies(
-        @Query("language") language: String = "en-US",
+        @Query("language") language: String = "uk-UA",
         @Query("page") page: Int = 1
     ): MovieListResponseDto
 
     @GET("movie/{movieId}")
     suspend fun getMovieDetails(
         @Path("movieId") movieId: Int,
-        @Query("language") language: String = "en-US"
+        @Query("language") language: String = "uk-UA"
     ) : MovieDetailsDto
 }
