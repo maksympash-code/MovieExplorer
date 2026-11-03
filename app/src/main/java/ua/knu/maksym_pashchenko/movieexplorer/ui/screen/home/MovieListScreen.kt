@@ -49,9 +49,9 @@ fun MovieListScreen(
                     MovieCard(
                         movie = movie,
                         modifier = Modifier.padding(
-                                horizontal = 12.dp,
-                                vertical = 6.dp
-                            ),
+                            horizontal = 12.dp,
+                            vertical = 6.dp
+                        ),
                         onClick = {
                             onMovieClick(movie.id)
                         }

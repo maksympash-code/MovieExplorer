@@ -40,7 +40,7 @@ class MainActivity : ComponentActivity() {
         val viewModel = ViewModelProvider(
             this,
             factory
-        ) [MovieListViewModel::class.java]
+        )[MovieListViewModel::class.java]
 
         enableEdgeToEdge()
         setContent {

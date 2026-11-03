@@ -1,6 +1,5 @@
 package ua.knu.maksym_pashchenko.movieexplorer
 
-import androidx.room.util.query
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue

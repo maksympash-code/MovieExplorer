@@ -18,12 +18,12 @@ interface MovieApi {
     suspend fun getMovieDetails(
         @Path("movieId") movieId: Int,
         @Query("language") language: String = "uk-UA"
-    ) : MovieDetailsDto
+    ): MovieDetailsDto
 
     @GET("search/movie")
     suspend fun searchMovies(
         @Query("query") query: String,
         @Query("language") language: String = "uk-UA",
         @Query("page") page: Int = 1
-    ) : MovieListResponseDto
+    ): MovieListResponseDto
 }

@@ -11,9 +11,9 @@ interface MovieRepository {
 
     suspend fun getMovieDetails(
         movieId: Int
-    ) : MovieDetails
+    ): MovieDetails
 
     suspend fun searchMovies(
         query: String
-    ) : List<Movie>
+    ): List<Movie>
 }

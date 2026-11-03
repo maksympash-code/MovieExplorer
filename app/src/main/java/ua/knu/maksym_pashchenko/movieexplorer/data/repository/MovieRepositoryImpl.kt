@@ -8,7 +8,7 @@ import ua.knu.maksym_pashchenko.movieexplorer.domain.model.MovieDetails
 
 class MovieRepositoryImpl(
     private val movieApi: MovieApi
-): MovieRepository {
+) : MovieRepository {
     override suspend fun getPopularMovies(page: Int): List<Movie> {
         return movieApi
             .getPopularMovies(page = page)
