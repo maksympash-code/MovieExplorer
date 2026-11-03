@@ -27,7 +27,9 @@ import ua.knu.maksym_pashchenko.movieexplorer.data.repository.MovieRepository
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.details.MovieDetailsScreen
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.home.MovieListScreen
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.home.MovieListUiState
+import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.search.SearchScreen
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.viewmodel.MovieDetailsViewModel
+import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.viewmodel.SearchViewModel
 
 @Composable
 fun AppNavGraph(
@@ -111,12 +113,12 @@ fun AppNavGraph(
                 }
             }
 
-            val viewmodel = ViewModelProvider(
+            val detailsViewModel = ViewModelProvider(
                 backStackEntry,
                 factory
             )[MovieDetailsViewModel::class.java]
 
-            val detailsUiState by viewmodel.uiState.collectAsStateWithLifecycle()
+            val detailsUiState by detailsViewModel.uiState.collectAsStateWithLifecycle()
 
             MovieDetailsScreen(
                 uiState = detailsUiState,
@@ -124,10 +126,46 @@ fun AppNavGraph(
             )
         }
 
-        composable(Routes.SEARCH) {
-            PlaceholderScreen(
-                title = "Пошук фільмів",
-                onBack = { navController.popBackStack() }
+        composable(Routes.SEARCH) { backStackEntry ->
+
+            val factory = object : ViewModelProvider.Factory {
+                override fun <T : ViewModel> create(
+                    modelClass: Class<T>,
+                    extras: CreationExtras
+                ): T {
+                    require(
+                        modelClass.isAssignableFrom(
+                            SearchViewModel::class.java
+                        )
+                    )
+
+                    @Suppress("UNCHECKED_CAST")
+                    return SearchViewModel(
+                        repository = repository
+                    ) as T
+                }
+            }
+
+            val searchViewModel = ViewModelProvider(
+                backStackEntry,
+                factory
+            )[SearchViewModel::class.java]
+
+            val searchUiState by searchViewModel.uiState.collectAsStateWithLifecycle()
+
+            SearchScreen(
+                uiState = searchUiState,
+                onSearch = { query ->
+                    searchViewModel.searchMovies(query)
+                },
+                onMovieClick = { movieId ->
+                    navController.navigate(
+                        Routes.movieDetails(movieId)
+                    )
+                },
+                onBackClick = {
+                    navController.popBackStack()
+                }
             )
         }
 
