@@ -6,7 +6,6 @@ import androidx.test.platform.app.InstrumentationRegistry
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -16,8 +15,6 @@ import org.junit.runner.RunWith
 import ua.knu.maksym_pashchenko.movieexplorer.data.local.dao.FavoriteMovieDao
 import ua.knu.maksym_pashchenko.movieexplorer.data.local.database.MovieDatabase
 import ua.knu.maksym_pashchenko.movieexplorer.data.local.entity.FavoriteMovieEntity
-import ua.knu.maksym_pashchenko.movieexplorer.data.repository.MovieRepository
-import ua.knu.maksym_pashchenko.movieexplorer.domain.model.Movie
 
 
 @RunWith(AndroidJUnit4::class)

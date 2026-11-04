@@ -14,3 +14,5 @@
 .cxx
 local.properties
 /.idea/deploymentTargetSelector.xml
+ksp-log.txt
+.idea/androidTestResultsUserPreferences.xml
