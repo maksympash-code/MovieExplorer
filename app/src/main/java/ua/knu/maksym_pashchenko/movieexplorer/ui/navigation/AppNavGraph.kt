@@ -152,11 +152,13 @@ fun AppNavGraph(
             )[SearchViewModel::class.java]
 
             val searchUiState by searchViewModel.uiState.collectAsStateWithLifecycle()
+            val query by searchViewModel.query.collectAsStateWithLifecycle()
 
             SearchScreen(
+                query = query,
                 uiState = searchUiState,
-                onSearch = { query ->
-                    searchViewModel.searchMovies(query)
+                onQueryChanged = { newQuery ->
+                    searchViewModel.onQueryChange(newQuery)
                 },
                 onMovieClick = { movieId ->
                     navController.navigate(
