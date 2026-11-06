@@ -12,13 +12,13 @@ import ua.knu.maksym_pashchenko.movieexplorer.data.local.entity.FavoriteMovieEnt
 interface FavoriteMovieDao {
 
     @Query("SELECT * FROM favorite_movies ORDER BY title ASC")
-    fun getAllFavorites(): Flow<List<FavoriteMovieEntity>>
+    fun getFavoriteMovies(): Flow<List<FavoriteMovieEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFavorite(movie: FavoriteMovieEntity)
+    suspend fun insertMovie(movie: FavoriteMovieEntity)
 
     @Delete
-    suspend fun deleteFavorite(movie: FavoriteMovieEntity)
+    suspend fun deleteMovie(movie: FavoriteMovieEntity)
 
     @Query("SELECT EXISTS(SELECT 1 FROM favorite_movies WHERE id = :movieId)")
     fun isFavorite(movieId: Int): Flow<Boolean>
