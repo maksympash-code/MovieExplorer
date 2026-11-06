@@ -8,11 +8,7 @@ import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.cancellable
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.take
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
@@ -140,7 +136,7 @@ class FavoriteMovieDaoTest {
             }
 
             assertEquals(2, thirdFavorites.size)
-            assertEquals("Interstellar", secondFavorites[0].title)
+            assertEquals("Interstellar", thirdFavorites[0].title)
             assertEquals("Superman", thirdFavorites[1].title)
         } finally {
             job.cancelAndJoin()
@@ -157,9 +153,9 @@ class FavoriteMovieDaoTest {
         )
 
         val job = launch {
-            dao.getFavoriteMovies()
-                .collect { movies ->
-                    channel.send(movies.any { it.id == movie.id })
+            dao.isFavorite(movie.id)
+                .collect { isFavorite ->
+                    channel.send(isFavorite)
                 }
         }
 
