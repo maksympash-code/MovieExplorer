@@ -22,13 +22,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val database =
-            Room.databaseBuilder<MovieDatabase>(
-                context = applicationContext,
-                "MovieDatabase"
-            )
-                .setDriver(AndroidSQLiteDriver())
-                .build()
+        val database = MovieDatabase.getInstance(context = applicationContext)
 
         val favoriteMovieDao = database.favoriteMovieDao()
 

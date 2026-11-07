@@ -15,5 +15,7 @@ data class FavoriteMovieEntity(
 
     val rating: Double,
 
-    val overview: String
+    val overview: String,
+
+    val releaseYear: Int?
 )

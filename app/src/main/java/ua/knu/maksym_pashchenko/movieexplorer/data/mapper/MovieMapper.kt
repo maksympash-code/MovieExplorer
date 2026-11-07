@@ -51,7 +51,8 @@ fun Movie.toFavoriteMovieEntity(): FavoriteMovieEntity {
         title = title,
         posterPath = posterUrl,
         rating = rating,
-        overview = overview
+        overview = overview,
+        releaseYear = releaseYear
     )
 }
 
@@ -62,6 +63,6 @@ fun FavoriteMovieEntity.toDomainMovie(): Movie {
         overview = overview,
         posterUrl = posterPath,
         rating = rating,
-        releaseYear = null
+        releaseYear = releaseYear
     )
 }
