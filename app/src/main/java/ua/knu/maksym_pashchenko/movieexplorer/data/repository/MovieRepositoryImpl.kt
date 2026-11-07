@@ -1,5 +1,10 @@
 package ua.knu.maksym_pashchenko.movieexplorer.data.repository
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import ua.knu.maksym_pashchenko.movieexplorer.data.local.dao.FavoriteMovieDao
+import ua.knu.maksym_pashchenko.movieexplorer.data.mapper.toDomainMovie
+import ua.knu.maksym_pashchenko.movieexplorer.data.mapper.toFavoriteMovieEntity
 import ua.knu.maksym_pashchenko.movieexplorer.data.mapper.toMovie
 import ua.knu.maksym_pashchenko.movieexplorer.data.mapper.toMovieDetails
 import ua.knu.maksym_pashchenko.movieexplorer.data.remote.MovieApi
@@ -7,7 +12,8 @@ import ua.knu.maksym_pashchenko.movieexplorer.domain.model.Movie
 import ua.knu.maksym_pashchenko.movieexplorer.domain.model.MovieDetails
 
 class MovieRepositoryImpl(
-    private val movieApi: MovieApi
+    private val movieApi: MovieApi,
+    private val favoriteMovieDao: FavoriteMovieDao
 ) : MovieRepository {
     override suspend fun getPopularMovies(page: Int): List<Movie> {
         return movieApi
@@ -38,5 +44,25 @@ class MovieRepositoryImpl(
             .map { movieDto ->
                 movieDto.toMovie()
             }
+    }
+
+    override suspend fun addFavorite(movie: Movie) {
+        favoriteMovieDao.insertMovie(movie.toFavoriteMovieEntity())
+    }
+
+    override suspend fun removeFavorite(movieId: Int) {
+        favoriteMovieDao.deleteMovie(movieId)
+    }
+
+    override fun getFavorites(): Flow<List<Movie>> {
+        return favoriteMovieDao
+            .getFavoriteMovies()
+            .map { movieList ->
+                movieList.map { it.toDomainMovie() }
+            }
+    }
+
+    override fun isFavorite(movieId: Int): Flow<Boolean> {
+        return favoriteMovieDao.isFavorite(movieId)
     }
 }

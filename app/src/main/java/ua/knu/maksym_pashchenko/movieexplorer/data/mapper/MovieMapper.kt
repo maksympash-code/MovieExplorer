@@ -1,5 +1,6 @@
 package ua.knu.maksym_pashchenko.movieexplorer.data.mapper
 
+import ua.knu.maksym_pashchenko.movieexplorer.data.local.entity.FavoriteMovieEntity
 import ua.knu.maksym_pashchenko.movieexplorer.data.remote.dto.MovieDetailsDto
 import ua.knu.maksym_pashchenko.movieexplorer.data.remote.dto.MovieDto
 import ua.knu.maksym_pashchenko.movieexplorer.domain.model.Movie
@@ -41,5 +42,26 @@ fun MovieDetailsDto.toMovieDetails(): MovieDetails {
         genres = genres.map { it.name },
         status = status,
         tagLine = tagline
+    )
+}
+
+fun Movie.toFavoriteMovieEntity(): FavoriteMovieEntity {
+    return FavoriteMovieEntity(
+        id = id,
+        title = title,
+        posterPath = posterUrl,
+        rating = rating,
+        overview = overview
+    )
+}
+
+fun FavoriteMovieEntity.toDomainMovie(): Movie {
+    return Movie(
+        id = id,
+        title = title,
+        overview = overview,
+        posterUrl = posterPath,
+        rating = rating,
+        releaseYear = null
     )
 }

@@ -1,7 +1,6 @@
 package ua.knu.maksym_pashchenko.movieexplorer.data.local.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -17,8 +16,8 @@ interface FavoriteMovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMovie(movie: FavoriteMovieEntity)
 
-    @Delete
-    suspend fun deleteMovie(movie: FavoriteMovieEntity)
+    @Query("DELETE FROM favorite_movies WHERE id = :movieId")
+    suspend fun deleteMovie(movieId: Int)
 
     @Query("SELECT EXISTS(SELECT 1 FROM favorite_movies WHERE id = :movieId)")
     fun isFavorite(movieId: Int): Flow<Boolean>

@@ -84,7 +84,7 @@ class FavoriteMovieDaoTest {
 
         assertTrue(dao.isFavorite(movie.id).first())
 
-        dao.deleteMovie(movie)
+        dao.deleteMovie(movie.id)
 
         assertFalse(dao.isFavorite(movie.id).first())
         assertTrue(dao.getFavoriteMovies().first().isEmpty())
@@ -174,7 +174,7 @@ class FavoriteMovieDaoTest {
 
             assertEquals(true, secondCheck)
 
-            dao.deleteMovie(movie)
+            dao.deleteMovie(movie.id)
 
             val thirdCheck = withTimeout(5_000.milliseconds) {
                 channel.receive()

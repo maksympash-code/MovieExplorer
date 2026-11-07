@@ -9,6 +9,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.CreationExtras
+import androidx.room.Room
+import androidx.sqlite.driver.AndroidSQLiteDriver
+import ua.knu.maksym_pashchenko.movieexplorer.data.local.database.MovieDatabase
 import ua.knu.maksym_pashchenko.movieexplorer.data.remote.RetrofitClient
 import ua.knu.maksym_pashchenko.movieexplorer.data.repository.MovieRepositoryImpl
 import ua.knu.maksym_pashchenko.movieexplorer.ui.navigation.AppNavGraph
@@ -19,7 +22,20 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val repository = MovieRepositoryImpl(RetrofitClient.api)
+        val database =
+            Room.databaseBuilder<MovieDatabase>(
+                context = applicationContext,
+                "MovieDatabase"
+            )
+                .setDriver(AndroidSQLiteDriver())
+                .build()
+
+        val favoriteMovieDao = database.favoriteMovieDao()
+
+        val repository = MovieRepositoryImpl(
+            RetrofitClient.api,
+            favoriteMovieDao
+        )
 
         val factory = object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(
