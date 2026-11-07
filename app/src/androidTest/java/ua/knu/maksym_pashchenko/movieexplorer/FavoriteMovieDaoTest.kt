@@ -127,7 +127,8 @@ class FavoriteMovieDaoTest {
                     title = "Superman",
                     posterPath = "/test-poster_1.jpg",
                     rating = 8.0,
-                    overview = "Тестовий опис"
+                    overview = "Тестовий опис",
+                    releaseYear = null
                 )
             )
 
@@ -193,6 +194,7 @@ class FavoriteMovieDaoTest {
         title = "Interstellar",
         posterPath = "/test-poster.jpg",
         rating = 8.5,
-        overview = "Тестовий опис"
+        overview = "Тестовий опис",
+        releaseYear = null
     )
 }
