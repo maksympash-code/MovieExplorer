@@ -16,15 +16,21 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,9 +44,24 @@ import ua.knu.maksym_pashchenko.movieexplorer.domain.model.MovieDetails
 @Composable
 fun MovieDetailsScreen(
     uiState: MovieDetailsUiState,
+    isFavorite: Boolean?,
+    isFavoriteUpdating: Boolean,
+    favoriteError: String?,
     onBackClick: () -> Unit,
+    onFavoriteClick: () -> Unit,
+    onFavoriteClearError: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(favoriteError) {
+        if (favoriteError != null) {
+            snackbarHostState.showSnackbar(favoriteError)
+            onFavoriteClearError()
+        }
+    }
+
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -57,9 +78,33 @@ fun MovieDetailsScreen(
                             contentDescription = "Назад"
                         )
                     }
+                },
+                actions = {
+                    IconButton(
+                        onClick = onFavoriteClick,
+                        enabled = (isFavorite != null && !isFavoriteUpdating && uiState is MovieDetailsUiState.Success)
+                    ) {
+                        Icon(
+                            imageVector = if (isFavorite == true) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
+                            contentDescription = when (isFavorite) {
+                                null -> {
+                                    "Завантаження статусу улюбленого"
+                                }
+
+                                true -> {
+                                    "Видалити з улюблених"
+                                }
+
+                                false -> {
+                                    "Додати до улюблених"
+                                }
+                            }
+                        )
+                    }
                 }
             )
-        }
+        },
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { innerPadding ->
 
         when (uiState) {

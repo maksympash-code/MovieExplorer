@@ -119,10 +119,18 @@ fun AppNavGraph(
             )[MovieDetailsViewModel::class.java]
 
             val detailsUiState by detailsViewModel.uiState.collectAsStateWithLifecycle()
+            val detailsIsFavorite by detailsViewModel.isFavorite.collectAsStateWithLifecycle()
+            val detailsIsFavoriteUpdating by detailsViewModel.isFavoriteUpdating.collectAsStateWithLifecycle()
+            val detailsFavoriteError by detailsViewModel.favoriteError.collectAsStateWithLifecycle()
 
             MovieDetailsScreen(
                 uiState = detailsUiState,
-                onBackClick = { navController.popBackStack() }
+                isFavorite = detailsIsFavorite,
+                isFavoriteUpdating = detailsIsFavoriteUpdating,
+                favoriteError = detailsFavoriteError,
+                onBackClick = { navController.popBackStack() },
+                onFavoriteClick = { detailsViewModel.onFavoriteClick() },
+                onFavoriteClearError = { detailsViewModel.clearFavoriteError() }
             )
         }
 

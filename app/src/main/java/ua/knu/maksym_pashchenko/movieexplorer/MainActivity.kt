@@ -9,8 +9,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.CreationExtras
-import androidx.room.Room
-import androidx.sqlite.driver.AndroidSQLiteDriver
 import ua.knu.maksym_pashchenko.movieexplorer.data.local.database.MovieDatabase
 import ua.knu.maksym_pashchenko.movieexplorer.data.remote.RetrofitClient
 import ua.knu.maksym_pashchenko.movieexplorer.data.repository.MovieRepositoryImpl

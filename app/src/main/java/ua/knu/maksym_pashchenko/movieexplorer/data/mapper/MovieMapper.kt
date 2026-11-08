@@ -66,3 +66,14 @@ fun FavoriteMovieEntity.toDomainMovie(): Movie {
         releaseYear = releaseYear
     )
 }
+
+fun MovieDetails.toMovie(): Movie {
+    return Movie(
+        id = id,
+        title = title,
+        overview = overview,
+        posterUrl = posterUrl,
+        rating = rating,
+        releaseYear = releaseDate?.take(4)?.toIntOrNull()
+    )
+}
