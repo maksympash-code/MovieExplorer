@@ -11,7 +11,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
@@ -217,28 +216,6 @@ fun AppNavGraph(
                     )
                 }
             )
-        }
-    }
-}
-
-
-@Composable
-private fun PlaceholderScreen(
-    title: String,
-    onBack: () -> Unit
-) {
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-        Text(text = title)
-
-        Button(
-            onClick = onBack
-        ) {
-            Text("Назад")
         }
     }
 }
