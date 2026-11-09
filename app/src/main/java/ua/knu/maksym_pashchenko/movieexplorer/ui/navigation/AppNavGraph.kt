@@ -25,9 +25,11 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import ua.knu.maksym_pashchenko.movieexplorer.data.repository.MovieRepository
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.details.MovieDetailsScreen
+import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.favorites.FavoritesScreen
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.home.MovieListScreen
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.home.MovieListUiState
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.search.SearchScreen
+import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.viewmodel.FavoritesViewModel
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.viewmodel.MovieDetailsViewModel
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.viewmodel.SearchViewModel
 
@@ -179,10 +181,41 @@ fun AppNavGraph(
             )
         }
 
-        composable(Routes.FAVORITES) {
-            PlaceholderScreen(
-                title = "Улюблені фільми",
-                onBack = { navController.popBackStack() }
+        composable(Routes.FAVORITES) { backStackEntry ->
+
+            val factory = object : ViewModelProvider.Factory {
+                override fun <T : ViewModel> create(
+                    modelClass: Class<T>,
+                    extras: CreationExtras
+                ): T {
+                    require(
+                        modelClass.isAssignableFrom(
+                            FavoritesViewModel::class.java
+                        )
+                    )
+
+                    @Suppress("UNCHECKED_CAST")
+                    return FavoritesViewModel(
+                        repository = repository
+                    ) as T
+                }
+            }
+
+            val favoritesViewModel = ViewModelProvider(
+                backStackEntry,
+                factory
+            )[FavoritesViewModel::class.java]
+
+            val favoritesUiState by favoritesViewModel.uiState.collectAsStateWithLifecycle()
+
+            FavoritesScreen(
+                uiState = favoritesUiState,
+                onBackClick = { navController.popBackStack() },
+                onMovieClick = { movieId ->
+                    navController.navigate(
+                        Routes.movieDetails(movieId)
+                    )
+                }
             )
         }
     }
