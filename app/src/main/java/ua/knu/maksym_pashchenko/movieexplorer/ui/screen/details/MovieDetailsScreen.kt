@@ -18,6 +18,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -36,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import ua.knu.maksym_pashchenko.movieexplorer.domain.model.MovieDetails
@@ -50,6 +52,7 @@ fun MovieDetailsScreen(
     onBackClick: () -> Unit,
     onFavoriteClick: () -> Unit,
     onFavoriteClearError: () -> Unit,
+    onRetryClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -134,10 +137,22 @@ fun MovieDetailsScreen(
                         .padding(16.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(
-                        text = uiState.message,
-                        color = MaterialTheme.colorScheme.error
-                    )
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Text(
+                            text = uiState.message,
+                            color = MaterialTheme.colorScheme.error,
+                            textAlign = TextAlign.Center
+                        )
+                        Button(
+                            onClick = onRetryClick
+                        ) {
+                            Text(text = "Повторити")
+                        }
+                    }
+
                 }
             }
         }

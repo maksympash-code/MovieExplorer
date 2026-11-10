@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ua.knu.maksym_pashchenko.movieexplorer.data.mapper.toMovie
 import ua.knu.maksym_pashchenko.movieexplorer.data.repository.MovieRepository
+import ua.knu.maksym_pashchenko.movieexplorer.ui.common.toUserMessage
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.details.MovieDetailsUiState
 
 class MovieDetailsViewModel(
@@ -44,7 +45,7 @@ class MovieDetailsViewModel(
                 throw e
             } catch (e: Exception) {
                 _uiState.value = MovieDetailsUiState.Error(
-                    message = e.message ?: "Не вдалося завантажити деталі фільму"
+                    message = e.toUserMessage()
                 )
             }
         }
@@ -82,7 +83,7 @@ class MovieDetailsViewModel(
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {
-                _favoriteError.value = e.message ?: "Не вдалося змінити статус улюбленого фільму"
+                _favoriteError.value = "Не вдалося змінити статус улюбленого фільму"
             } finally {
                 _isFavoriteUpdating.value = false
             }

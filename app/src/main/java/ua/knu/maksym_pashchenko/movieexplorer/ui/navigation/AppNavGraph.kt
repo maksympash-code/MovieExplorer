@@ -35,7 +35,8 @@ import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.viewmodel.SearchViewMode
 @Composable
 fun AppNavGraph(
     uiState: MovieListUiState,
-    repository: MovieRepository
+    repository: MovieRepository,
+    onRetryClick: () -> Unit
 ) {
     val navController = rememberNavController()
 
@@ -77,7 +78,8 @@ fun AppNavGraph(
                             navController.navigate(
                                 Routes.movieDetails(movieId)
                             )
-                        }
+                        },
+                        onRetryClick = onRetryClick
                     )
                 }
             }
@@ -131,7 +133,8 @@ fun AppNavGraph(
                 favoriteError = detailsFavoriteError,
                 onBackClick = { navController.popBackStack() },
                 onFavoriteClick = { detailsViewModel.onFavoriteClick() },
-                onFavoriteClearError = { detailsViewModel.clearFavoriteError() }
+                onFavoriteClearError = { detailsViewModel.clearFavoriteError() },
+                onRetryClick = { detailsViewModel.loadMovieDetails() }
             )
         }
 

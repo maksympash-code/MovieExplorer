@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import ua.knu.maksym_pashchenko.movieexplorer.data.repository.MovieRepository
+import ua.knu.maksym_pashchenko.movieexplorer.ui.common.toUserMessage
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.search.SearchUiState
 
 @OptIn(FlowPreview::class)
@@ -73,7 +74,7 @@ class SearchViewModel(
                     } catch (e: Exception) {
                         if (query.value.trim() == normalizedQuery) {
                             _uiState.value = SearchUiState.Error(
-                                message = e.message ?: "Не вдалося виконати пошук фільмів"
+                                message = e.toUserMessage()
                             )
                         }
 

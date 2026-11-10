@@ -57,7 +57,8 @@ class MainActivity : ComponentActivity() {
 
                 AppNavGraph(
                     uiState = uiState,
-                    repository = repository
+                    repository = repository,
+                    onRetryClick = { viewModel.loadMovies() }
                 )
             }
         }

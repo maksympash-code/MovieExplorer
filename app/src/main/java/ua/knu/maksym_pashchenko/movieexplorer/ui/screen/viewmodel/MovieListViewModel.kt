@@ -2,11 +2,13 @@ package ua.knu.maksym_pashchenko.movieexplorer.ui.screen.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ua.knu.maksym_pashchenko.movieexplorer.data.repository.MovieRepository
+import ua.knu.maksym_pashchenko.movieexplorer.ui.common.toUserMessage
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.home.MovieListUiState
 
 class MovieListViewModel(
@@ -26,12 +28,10 @@ class MovieListViewModel(
 
                 _uiState.value = MovieListUiState.Success(movies)
 
+            } catch (e:  CancellationException){
+                throw e
             } catch (e: Exception) {
-
-                _uiState.value = MovieListUiState.Error(
-                    e.message ?: "Unknown error"
-                )
-
+                _uiState.value = MovieListUiState.Error(e.toUserMessage())
             }
         }
     }
