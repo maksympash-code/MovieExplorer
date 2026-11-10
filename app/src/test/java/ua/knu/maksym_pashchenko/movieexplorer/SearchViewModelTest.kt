@@ -5,6 +5,7 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -20,6 +21,7 @@ import ua.knu.maksym_pashchenko.movieexplorer.domain.model.Movie
 import ua.knu.maksym_pashchenko.movieexplorer.domain.model.MovieDetails
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.search.SearchUiState
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.viewmodel.SearchViewModel
+import kotlin.time.Duration.Companion.milliseconds
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class SearchViewModelTest {
@@ -71,12 +73,12 @@ class SearchViewModelTest {
 
         assertEquals(SearchUiState.Loading, viewModel.uiState.value)
 
-        advanceTimeBy(499)
+        advanceTimeBy(499.milliseconds)
         runCurrent()
 
         assertEquals(0, repository.searchCalls)
 
-        advanceTimeBy(1)
+        advanceTimeBy(1.milliseconds)
         runCurrent()
 
         assertEquals(1, repository.searchCalls)
@@ -96,21 +98,21 @@ class SearchViewModelTest {
 
         viewModel.onQueryChange("B")
         runCurrent()
-        advanceTimeBy(200)
+        advanceTimeBy(200.milliseconds)
 
         viewModel.onQueryChange("Ba")
         runCurrent()
-        advanceTimeBy(200)
+        advanceTimeBy(200.milliseconds)
 
         viewModel.onQueryChange("Batman")
         runCurrent()
 
-        advanceTimeBy(499)
+        advanceTimeBy(499.milliseconds)
         runCurrent()
 
         assertEquals(0, repository.searchCalls)
 
-        advanceTimeBy(1)
+        advanceTimeBy(1.milliseconds)
         runCurrent()
 
         assertEquals(1, repository.searchCalls)
@@ -193,7 +195,7 @@ class SearchViewModelTest {
         viewModel.onQueryChange("Batman")
         runCurrent()
 
-        advanceTimeBy(500)
+        advanceTimeBy(500.milliseconds)
         runCurrent()
 
         assertEquals(1, repository.searchCalls)
@@ -201,7 +203,7 @@ class SearchViewModelTest {
         viewModel.onQueryChange("Superman")
         runCurrent()
 
-        advanceTimeBy(500)
+        advanceTimeBy(500.milliseconds)
         runCurrent()
 
         assertEquals(2, repository.searchCalls)
@@ -238,7 +240,7 @@ private class FakeMovieRepository() : MovieRepository {
         lastQuery = query
 
         try {
-            delay(responseDelayMillis)
+            delay(responseDelayMillis.milliseconds)
         } catch (e: CancellationException) {
             cancelledSearches++
             throw e
@@ -247,6 +249,22 @@ private class FakeMovieRepository() : MovieRepository {
         failure?.let { throw it }
 
         return movies
+    }
+
+    override suspend fun addFavorite(movie: Movie) {
+        error("Не використовується в цих тестах")
+    }
+
+    override suspend fun removeFavorite(movieId: Int) {
+        error("Не використовується в цих тестах")
+    }
+
+    override fun getFavorites(): Flow<List<Movie>> {
+        error("Не використовується в цих тестах")
+    }
+
+    override fun isFavorite(movieId: Int): Flow<Boolean> {
+        error("Не використовується в цих тестах")
     }
 
     override suspend fun getPopularMovies(page: Int): List<Movie> =
