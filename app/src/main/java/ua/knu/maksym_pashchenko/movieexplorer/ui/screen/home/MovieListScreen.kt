@@ -15,6 +15,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import ua.knu.maksym_pashchenko.movieexplorer.ui.common.EmptyContent
+import ua.knu.maksym_pashchenko.movieexplorer.ui.common.ErrorContent
+import ua.knu.maksym_pashchenko.movieexplorer.ui.common.LoadingContent
+import ua.knu.maksym_pashchenko.movieexplorer.ui.theme.AppSpacing
 
 @Composable
 fun MovieListScreen(
@@ -24,47 +28,21 @@ fun MovieListScreen(
 ) {
     when (uiState) {
         MovieListUiState.Loading -> {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
+            LoadingContent()
         }
 
         is MovieListUiState.Error -> {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center,
-            ) {
-                Column(
-                    modifier = Modifier.padding(12.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.spacedBy(12.dp),
-
-                ) {
-                    Text(
-                        text = uiState.message,
-                        textAlign = TextAlign.Center
-                    )
-                    Button(
-                        onClick = onRetryClick
-                    ) {
-                        Text("Повторити")
-                    }
-                }
-
-            }
+            ErrorContent(
+                message = uiState.message,
+                onRetryClick = onRetryClick
+            )
         }
 
         is MovieListUiState.Success -> {
             if (uiState.movies.isEmpty()) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(text = "Наразі немає доступних фільмів")
-                }
+                EmptyContent(
+                    message = "Наразі немає доступних фільмів"
+                )
             } else {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize()

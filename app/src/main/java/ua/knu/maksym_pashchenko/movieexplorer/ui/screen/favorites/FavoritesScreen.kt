@@ -22,13 +22,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ua.knu.maksym_pashchenko.movieexplorer.domain.model.Movie
+import ua.knu.maksym_pashchenko.movieexplorer.ui.common.EmptyContent
+import ua.knu.maksym_pashchenko.movieexplorer.ui.common.ErrorContent
+import ua.knu.maksym_pashchenko.movieexplorer.ui.common.LoadingContent
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.home.MovieCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun  FavoritesScreen(
     uiState: FavoritesUiState,
-    onBackClick: () -> Unit,
     onMovieClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -38,55 +40,38 @@ fun  FavoritesScreen(
             TopAppBar(
                 title = {
                     Text("Улюблені фільми")
-                },
-                navigationIcon = {
-                    IconButton(
-                        onClick = onBackClick
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Назад"
-                        )
-                    }
                 }
-
             )
         }
     ) { innerPadding ->
 
         when (uiState) {
             FavoritesUiState.Loading -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(innerPadding),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
-                }
-            }
-
-            is FavoritesUiState.Success -> {
-                FavoritesContent(
-                    movies = uiState.movies,
-                    onMovieClick = onMovieClick,
+                LoadingContent(
                     modifier = Modifier.padding(innerPadding)
                 )
             }
 
-            is FavoritesUiState.Error -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(innerPadding)
-                        .padding(16.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = uiState.message,
-                        color = MaterialTheme.colorScheme.error
+            is FavoritesUiState.Success -> {
+                if (uiState.movies.isEmpty()) {
+                    EmptyContent(
+                        message = "Поки немає улюблених фільмів",
+                        modifier = Modifier.padding(innerPadding)
+                    )
+                } else {
+                    FavoritesContent(
+                        movies = uiState.movies,
+                        onMovieClick = onMovieClick,
+                        modifier = Modifier.padding(innerPadding)
                     )
                 }
+            }
+
+            is FavoritesUiState.Error -> {
+                ErrorContent(
+                    message = uiState.message,
+                    modifier = Modifier.padding(innerPadding)
+                )
             }
         }
     }
@@ -98,46 +83,23 @@ private fun FavoritesContent(
     onMovieClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    if (movies.isEmpty()) {
-        Box(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.FavoriteBorder,
-                    contentDescription = null
-                )
-                Text(
-                    text = "Поки немає улюблених фільмів",
-                    style = MaterialTheme.typography.titleMedium
-                )
-            }
-
-        }
-    } else {
-        LazyColumn(
-            modifier = modifier.fillMaxSize()
-        ) {
-            items(
-                items = movies,
-                key = { it.id }
-            ) { movie ->
-                MovieCard(
-                    movie = movie,
-                    modifier = Modifier.padding(
-                        horizontal = 12.dp,
-                        vertical = 6.dp
-                    ),
-                    onClick = {
-                        onMovieClick(movie.id)
-                    }
-                )
-            }
+    LazyColumn(
+        modifier = modifier.fillMaxSize()
+    ) {
+        items(
+            items = movies,
+            key = { it.id }
+        ) { movie ->
+            MovieCard(
+                movie = movie,
+                modifier = Modifier.padding(
+                    horizontal = 12.dp,
+                    vertical = 6.dp
+                ),
+                onClick = {
+                    onMovieClick(movie.id)
+                }
+            )
         }
     }
 }

@@ -1,6 +1,5 @@
 package ua.knu.maksym_pashchenko.movieexplorer.ui.screen.details
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,11 +35,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
+import ua.knu.maksym_pashchenko.movieexplorer.R
 import ua.knu.maksym_pashchenko.movieexplorer.domain.model.MovieDetails
+import ua.knu.maksym_pashchenko.movieexplorer.ui.common.ErrorContent
+import ua.knu.maksym_pashchenko.movieexplorer.ui.common.LoadingContent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -112,14 +118,9 @@ fun MovieDetailsScreen(
 
         when (uiState) {
             MovieDetailsUiState.Loading -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(innerPadding),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator()
-                }
+                LoadingContent(
+                    modifier = Modifier.padding(innerPadding)
+                )
             }
 
             is MovieDetailsUiState.Success -> {
@@ -130,30 +131,11 @@ fun MovieDetailsScreen(
             }
 
             is MovieDetailsUiState.Error -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(innerPadding)
-                        .padding(16.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        Text(
-                            text = uiState.message,
-                            color = MaterialTheme.colorScheme.error,
-                            textAlign = TextAlign.Center
-                        )
-                        Button(
-                            onClick = onRetryClick
-                        ) {
-                            Text(text = "Повторити")
-                        }
-                    }
-
-                }
+                ErrorContent(
+                    message = uiState.message,
+                    modifier = Modifier.padding(innerPadding),
+                    onRetryClick = onRetryClick
+                )
             }
         }
     }
@@ -164,6 +146,7 @@ private fun MovieDetailsContent(
     movie: MovieDetails,
     modifier: Modifier = Modifier
 ) {
+
     val backdropUrl = movie.backdropUrl
         ?.takeIf { it.isNotBlank() }
         ?: movie.posterUrl?.takeIf { it.isNotBlank() }
@@ -172,34 +155,31 @@ private fun MovieDetailsContent(
         ?.takeIf { it.isNotBlank() }
         ?: "Невідома"
 
+    val posterPlaceholder = painterResource(
+        id = R.drawable.in_movie_placeholder
+    )
+
     Column(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
         // 1. Backdrop
-        if (backdropUrl != null) {
-            AsyncImage(
-                model = backdropUrl,
-                contentDescription = "Фон фільму ${movie.title}",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(220.dp),
-                contentScale = ContentScale.Crop
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(backdropUrl)
+                .crossfade(true)
+                .build(),
+            contentDescription = "Фон фільму ${movie.title}",
+            placeholder = posterPlaceholder,
+            error = posterPlaceholder,
+            fallback = posterPlaceholder,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(220.dp),
+
             )
-        } else {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(220.dp)
-                    .background(
-                        MaterialTheme.colorScheme.surfaceVariant
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                Text("Зображення відсутнє")
-            }
-        }
 
         // 2. Poster + movie information
         Row(
@@ -209,19 +189,22 @@ private fun MovieDetailsContent(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalAlignment = Alignment.Top
         ) {
-            movie.posterUrl
-                ?.takeIf { it.isNotBlank() }
-                ?.let { posterUrl ->
-                    AsyncImage(
-                        model = posterUrl,
-                        contentDescription = "Постер фільму ${movie.title}",
-                        modifier = Modifier
-                            .width(110.dp)
-                            .height(165.dp)
-                            .clip(RoundedCornerShape(12.dp)),
-                        contentScale = ContentScale.Crop
-                    )
-                }
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(movie.posterUrl?.takeIf { it.isNotBlank() })
+                    .crossfade(true)
+                    .build(),
+                contentDescription = "Постер фільму ${movie.title}",
+                placeholder = posterPlaceholder,
+                error = posterPlaceholder,
+                fallback = posterPlaceholder,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .width(110.dp)
+                    .height(165.dp)
+                    .clip(RoundedCornerShape(12.dp)),
+            )
+
             Column(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(10.dp)

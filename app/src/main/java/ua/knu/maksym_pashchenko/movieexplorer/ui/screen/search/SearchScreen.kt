@@ -7,12 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -23,6 +18,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import ua.knu.maksym_pashchenko.movieexplorer.ui.common.EmptyContent
+import ua.knu.maksym_pashchenko.movieexplorer.ui.common.ErrorContent
+import ua.knu.maksym_pashchenko.movieexplorer.ui.common.LoadingContent
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.home.MovieCard
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,7 +30,6 @@ fun SearchScreen(
     uiState: SearchUiState,
     onQueryChanged: (String) -> Unit,
     onMovieClick: (Int) -> Unit,
-    onBackClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -42,14 +39,6 @@ fun SearchScreen(
             TopAppBar(
                 title = {
                     Text("Пошук фільмів")
-                },
-                navigationIcon = {
-                    IconButton(onClick = onBackClick) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Назад"
-                        )
-                    }
                 }
             )
         }
@@ -93,14 +82,9 @@ fun SearchScreen(
                 }
 
                 SearchUiState.Loading -> {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        CircularProgressIndicator()
-                    }
+                    LoadingContent(
+                        modifier = Modifier.weight(1f)
+                    )
                 }
 
                 is SearchUiState.Success -> {
@@ -128,17 +112,16 @@ fun SearchScreen(
                 }
 
                 SearchUiState.Empty -> {
-                    SearchMessage(
+                    EmptyContent(
                         message = "За вашим запитом нічого не знайдено",
                         modifier = Modifier.weight(1f)
                     )
                 }
 
                 is SearchUiState.Error -> {
-                    SearchMessage(
+                    ErrorContent(
                         message = "Помилка: ${uiState.message}",
-                        modifier = Modifier.weight(1f),
-                        isError = true
+                        modifier = Modifier.weight(1f)
                     )
                 }
             }
@@ -151,7 +134,6 @@ fun SearchScreen(
 private fun SearchMessage(
     message: String,
     modifier: Modifier = Modifier,
-    isError: Boolean = false
 ) {
     Box(
         modifier = modifier.fillMaxWidth(),
@@ -160,11 +142,7 @@ private fun SearchMessage(
         Text(
             text = message,
             modifier = Modifier.padding(16.dp),
-            color = if (isError) {
-                MaterialTheme.colorScheme.error
-            } else {
-                MaterialTheme.colorScheme.onSurfaceVariant
-            },
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
             style = MaterialTheme.typography.bodyLarge,
             textAlign = TextAlign.Center
         )
