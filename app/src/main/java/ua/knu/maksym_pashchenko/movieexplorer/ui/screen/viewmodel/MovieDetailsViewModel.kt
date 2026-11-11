@@ -11,6 +11,7 @@ import ua.knu.maksym_pashchenko.movieexplorer.data.mapper.toMovie
 import ua.knu.maksym_pashchenko.movieexplorer.data.repository.MovieRepository
 import ua.knu.maksym_pashchenko.movieexplorer.ui.common.toUserMessage
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.details.MovieDetailsUiState
+import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.favorites.FavoritesUiState
 
 class MovieDetailsViewModel(
     private val repository: MovieRepository,
@@ -97,9 +98,16 @@ class MovieDetailsViewModel(
 
     private fun observeFavoriteStatus() {
         viewModelScope.launch {
-            repository.isFavorite(movieId).collect { state ->
-                _isFavorite.value = state
+            try {
+                repository.isFavorite(movieId).collect { state ->
+                    _isFavorite.value = state
+                }
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                _favoriteError.value = FavoritesUiState.Error(e.toUserMessage()).toString()
             }
+
         }
     }
 

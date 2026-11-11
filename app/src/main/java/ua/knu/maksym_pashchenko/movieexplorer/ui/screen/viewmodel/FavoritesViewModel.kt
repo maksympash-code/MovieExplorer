@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ua.knu.maksym_pashchenko.movieexplorer.data.repository.MovieRepository
+import ua.knu.maksym_pashchenko.movieexplorer.ui.common.toUserMessage
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.favorites.FavoritesUiState
 
 class FavoritesViewModel(
@@ -26,9 +27,7 @@ class FavoritesViewModel(
             } catch (e : CancellationException) {
                 throw e
             } catch (e : Exception) {
-                _uiState.value = FavoritesUiState.Error(
-                    message = e.message ?: "Невідома помилка"
-                )
+                _uiState.value = FavoritesUiState.Error(e.toUserMessage())
             }
 
         }
