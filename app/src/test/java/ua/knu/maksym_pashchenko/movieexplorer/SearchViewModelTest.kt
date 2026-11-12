@@ -160,7 +160,7 @@ class SearchViewModelTest {
         advanceUntilIdle()
 
         assertEquals(
-            SearchUiState.Error("Помилка API"),
+            SearchUiState.Error("Сталася непередбачена помилка"),
             viewModel.uiState.value
         )
     }

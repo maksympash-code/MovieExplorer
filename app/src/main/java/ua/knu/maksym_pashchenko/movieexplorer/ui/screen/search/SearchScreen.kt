@@ -62,10 +62,10 @@ fun SearchScreen(
                     value = query,
                     onValueChange = onQueryChanged,
                     label = {
-                        Text("Назва фільму")
+                        Text(stringResource(R.string.movie_name))
                     },
                     placeholder = {
-                        Text("Введіть назву фільму")
+                        Text(stringResource(R.string.type_movie_name))
                     },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth()

@@ -19,6 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
@@ -86,7 +87,7 @@ fun MovieCard(
                 )
 
                 Text(
-                    text = movie.releaseYear?.toString() ?: "Рік невідомий",
+                    text = movie.releaseYear?.toString() ?: stringResource(R.string.unknown_year),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

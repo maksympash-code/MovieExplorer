@@ -8,8 +8,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import ua.knu.maksym_pashchenko.movieexplorer.R
 
 @Composable
 fun MovieOverview(
@@ -29,7 +31,7 @@ fun MovieOverview(
 
         Text(
             text = overview.ifBlank {
-                "Опис фільму відсутній"
+                stringResource(R.string.empty_overview_description)
             },
             style = MaterialTheme.typography.bodyLarge
         )

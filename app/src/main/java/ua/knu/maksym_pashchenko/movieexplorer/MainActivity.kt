@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.CreationExtras
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import ua.knu.maksym_pashchenko.movieexplorer.data.local.database.MovieDatabase
 import ua.knu.maksym_pashchenko.movieexplorer.data.remote.RetrofitClient
 import ua.knu.maksym_pashchenko.movieexplorer.data.repositoryImpl.MovieRepositoryImpl
@@ -29,19 +31,9 @@ class MainActivity : ComponentActivity() {
             favoriteMovieDao
         )
 
-        val factory = object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(
-                modelClass: Class<T>,
-                extras: CreationExtras
-            ): T {
-                require(
-                    modelClass.isAssignableFrom(
-                        MovieListViewModel::class.java
-                    )
-                )
-
-                @Suppress("UNCHECKED_CAST")
-                return MovieListViewModel(repository) as T
+        val factory = viewModelFactory {
+            initializer {
+                MovieListViewModel(repository)
             }
         }
 

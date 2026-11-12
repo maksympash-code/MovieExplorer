@@ -10,6 +10,8 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
+import ua.knu.maksym_pashchenko.movieexplorer.R
 
 @Composable
 fun BottomNavigationBar(
@@ -28,7 +30,7 @@ fun BottomNavigationBar(
                     contentDescription = null
                 )
             },
-            label = { Text("Головна") }
+            label = { Text(stringResource(R.string.main)) }
         )
 
         NavigationBarItem(
@@ -42,7 +44,7 @@ fun BottomNavigationBar(
                     contentDescription = null
                 )
             },
-            label = { Text("Пошук") }
+            label = { Text(stringResource(R.string.search)) }
         )
 
         NavigationBarItem(
@@ -56,7 +58,7 @@ fun BottomNavigationBar(
                     contentDescription = null
                 )
             },
-            label = { Text("Улюблені") }
+            label = { Text(stringResource(R.string.favorites)) }
         )
     }
 }

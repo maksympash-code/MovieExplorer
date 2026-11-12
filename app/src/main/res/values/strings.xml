@@ -4,4 +4,16 @@
     <string name="search_title">Пошук фільмів</string>
     <string name="favorites_title">Улюблені фільми</string>
     <string name="retry">Повторити</string>
+    <string name="main">Головна</string>
+    <string name="search">Пошук</string>
+    <string name="favorites">Улюблені</string>
+    <string name="movie_name">Назва фільму</string>
+    <string name="type_movie_name">Введіть назву фільму</string>
+    <string name="movie_details">Деталі фільму</string>
+    <string name="back">Назад</string>
+    <string name="movie_release_date">Дата виходу: %1$s</string>
+    <string name="movie_poster_description">Постер фільму %1$s</string>
+    <string name="empty_overview_description">Опис фільму відсутній</string>
+    <string name="unknown_year">Рік невідомий</string>
+    <string name="no_avaible_movies">Наразі немає доступних фільмів</string>
 </resources>

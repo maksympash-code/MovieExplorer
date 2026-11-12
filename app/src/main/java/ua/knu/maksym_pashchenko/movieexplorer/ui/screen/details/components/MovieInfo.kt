@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
@@ -50,7 +51,7 @@ fun MovieInfo(
                 .data(movie.posterUrl?.takeIf { it.isNotBlank() })
                 .crossfade(true)
                 .build(),
-            contentDescription = "Постер фільму ${movie.title}",
+            contentDescription = stringResource(R.string.movie_poster_description, movie.title),
             placeholder = posterPlaceholder,
             error = posterPlaceholder,
             fallback = posterPlaceholder,
@@ -77,7 +78,7 @@ fun MovieInfo(
             )
 
             Text(
-                text = "Дата виходу: $releaseDate",
+                text = stringResource(R.string.movie_release_date, releaseDate),
                 style = MaterialTheme.typography.bodyMedium
             )
         }

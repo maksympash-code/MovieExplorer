@@ -23,6 +23,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import ua.knu.maksym_pashchenko.movieexplorer.R
 import ua.knu.maksym_pashchenko.movieexplorer.domain.model.MovieDetails
 import ua.knu.maksym_pashchenko.movieexplorer.ui.common.ErrorContent
 import ua.knu.maksym_pashchenko.movieexplorer.ui.common.LoadingContent
@@ -59,7 +61,7 @@ fun MovieDetailsScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Деталі фільму")
+                    Text(stringResource(R.string.movie_details))
                 },
                 navigationIcon = {
                     IconButton(
@@ -67,7 +69,7 @@ fun MovieDetailsScreen(
                     ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Назад"
+                            contentDescription = stringResource(R.string.back)
                         )
                     }
                 },
