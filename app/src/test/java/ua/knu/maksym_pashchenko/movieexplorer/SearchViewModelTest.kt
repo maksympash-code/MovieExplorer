@@ -16,9 +16,9 @@ import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import ua.knu.maksym_pashchenko.movieexplorer.data.repository.MovieRepository
 import ua.knu.maksym_pashchenko.movieexplorer.domain.model.Movie
 import ua.knu.maksym_pashchenko.movieexplorer.domain.model.MovieDetails
+import ua.knu.maksym_pashchenko.movieexplorer.domain.repository.MovieRepository
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.search.SearchUiState
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.viewmodel.SearchViewModel
 import kotlin.time.Duration.Companion.milliseconds

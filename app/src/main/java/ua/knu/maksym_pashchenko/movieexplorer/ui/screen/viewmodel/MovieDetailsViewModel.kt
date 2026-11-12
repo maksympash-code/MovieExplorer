@@ -7,11 +7,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import ua.knu.maksym_pashchenko.movieexplorer.data.mapper.toMovie
-import ua.knu.maksym_pashchenko.movieexplorer.data.repository.MovieRepository
+import ua.knu.maksym_pashchenko.movieexplorer.domain.mapper.toMovie
+import ua.knu.maksym_pashchenko.movieexplorer.domain.repository.MovieRepository
 import ua.knu.maksym_pashchenko.movieexplorer.ui.common.toUserMessage
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.details.MovieDetailsUiState
-import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.favorites.FavoritesUiState
 
 class MovieDetailsViewModel(
     private val repository: MovieRepository,
@@ -105,7 +104,8 @@ class MovieDetailsViewModel(
             } catch (e: CancellationException) {
                 throw e
             } catch (e: Exception) {
-                _favoriteError.value = FavoritesUiState.Error(e.toUserMessage()).toString()
+                _isFavorite.value = null
+                _favoriteError.value = "Не вдалося перевірити статус улюбленого фільму"
             }
 
         }

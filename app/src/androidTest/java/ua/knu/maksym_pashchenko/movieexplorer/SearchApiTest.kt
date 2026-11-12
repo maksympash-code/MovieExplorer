@@ -13,7 +13,7 @@ import org.junit.runner.RunWith
 import ua.knu.maksym_pashchenko.movieexplorer.data.local.dao.FavoriteMovieDao
 import ua.knu.maksym_pashchenko.movieexplorer.data.local.database.MovieDatabase
 import ua.knu.maksym_pashchenko.movieexplorer.data.remote.RetrofitClient
-import ua.knu.maksym_pashchenko.movieexplorer.data.repository.MovieRepositoryImpl
+import ua.knu.maksym_pashchenko.movieexplorer.data.repositoryImpl.MovieRepositoryImpl
 
 @RunWith(AndroidJUnit4::class)
 class SearchApiTest {

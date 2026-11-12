@@ -1,4 +1,4 @@
-package ua.knu.maksym_pashchenko.movieexplorer.ui.screen.home
+package ua.knu.maksym_pashchenko.movieexplorer.ui.screen.common
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

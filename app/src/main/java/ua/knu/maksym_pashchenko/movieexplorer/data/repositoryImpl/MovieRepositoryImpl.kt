@@ -1,4 +1,4 @@
-package ua.knu.maksym_pashchenko.movieexplorer.data.repository
+package ua.knu.maksym_pashchenko.movieexplorer.data.repositoryImpl
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -10,6 +10,7 @@ import ua.knu.maksym_pashchenko.movieexplorer.data.mapper.toMovieDetails
 import ua.knu.maksym_pashchenko.movieexplorer.data.remote.MovieApi
 import ua.knu.maksym_pashchenko.movieexplorer.domain.model.Movie
 import ua.knu.maksym_pashchenko.movieexplorer.domain.model.MovieDetails
+import ua.knu.maksym_pashchenko.movieexplorer.domain.repository.MovieRepository
 
 class MovieRepositoryImpl(
     private val movieApi: MovieApi,

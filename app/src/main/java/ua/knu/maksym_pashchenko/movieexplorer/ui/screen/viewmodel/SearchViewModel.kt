@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import ua.knu.maksym_pashchenko.movieexplorer.data.repository.MovieRepository
+import ua.knu.maksym_pashchenko.movieexplorer.domain.repository.MovieRepository
 import ua.knu.maksym_pashchenko.movieexplorer.ui.common.toUserMessage
 import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.search.SearchUiState
 
@@ -46,7 +46,7 @@ class SearchViewModel(
                         }
                 }
                 .debounce { normalizedQuery ->
-                    if (normalizedQuery.isEmpty()) 0L else 500L
+                    if (normalizedQuery.isEmpty()) 0L else SEARCH_DEBOUNCE_MS
                 }
                 .collectLatest { normalizedQuery ->
 
@@ -81,5 +81,9 @@ class SearchViewModel(
                     }
                 }
         }
+    }
+
+    private companion object {
+        const val SEARCH_DEBOUNCE_MS = 500L
     }
 }

@@ -2,20 +2,18 @@ package ua.knu.maksym_pashchenko.movieexplorer.ui.screen.favorites
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import ua.knu.maksym_pashchenko.movieexplorer.domain.model.Movie
+import androidx.compose.ui.res.stringResource
+import ua.knu.maksym_pashchenko.movieexplorer.R
 import ua.knu.maksym_pashchenko.movieexplorer.ui.common.EmptyContent
 import ua.knu.maksym_pashchenko.movieexplorer.ui.common.ErrorContent
 import ua.knu.maksym_pashchenko.movieexplorer.ui.common.LoadingContent
-import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.home.MovieCard
+import ua.knu.maksym_pashchenko.movieexplorer.ui.screen.common.MovieListContent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -29,7 +27,7 @@ fun  FavoritesScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Улюблені фільми")
+                    Text(text = stringResource(R.string.favorites_title))
                 }
             )
         }
@@ -49,10 +47,12 @@ fun  FavoritesScreen(
                         modifier = Modifier.padding(innerPadding)
                     )
                 } else {
-                    FavoritesContent(
+                    MovieListContent(
                         movies = uiState.movies,
                         onMovieClick = onMovieClick,
-                        modifier = Modifier.padding(innerPadding)
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding)
                     )
                 }
             }
@@ -63,33 +63,6 @@ fun  FavoritesScreen(
                     modifier = Modifier.padding(innerPadding)
                 )
             }
-        }
-    }
-}
-
-@Composable
-private fun FavoritesContent(
-    movies: List<Movie>,
-    onMovieClick: (Int) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    LazyColumn(
-        modifier = modifier.fillMaxSize()
-    ) {
-        items(
-            items = movies,
-            key = { it.id }
-        ) { movie ->
-            MovieCard(
-                movie = movie,
-                modifier = Modifier.padding(
-                    horizontal = 12.dp,
-                    vertical = 6.dp
-                ),
-                onClick = {
-                    onMovieClick(movie.id)
-                }
-            )
         }
     }
 }

@@ -1,4 +1,4 @@
-package ua.knu.maksym_pashchenko.movieexplorer.data.repository
+package ua.knu.maksym_pashchenko.movieexplorer.domain.repository
 
 import kotlinx.coroutines.flow.Flow
 import ua.knu.maksym_pashchenko.movieexplorer.domain.model.Movie
