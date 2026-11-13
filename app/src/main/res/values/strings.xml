@@ -16,4 +16,6 @@
     <string name="empty_overview_description">Опис фільму відсутній</string>
     <string name="unknown_year">Рік невідомий</string>
     <string name="no_avaible_movies">Наразі немає доступних фільмів</string>
+    <string name="about_app">Movie Explorer — Android application powered by TMDB API.\n\nThis product uses the TMDB API but is not endorsed or certified by TMDB.</string>
+    <string name="close">Закрити</string>
 </resources>

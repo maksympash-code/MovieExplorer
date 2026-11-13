@@ -17,7 +17,6 @@ Built as a Kotlin + Jetpack Compose portfolio project to practice **MVVM**, REST
 
 ## 📱 Screenshots
 
-> Add screenshots from a running Android device or emulator to the `screenshots/` folder. The image links below will work after those files have been committed.
 
 | Home | Search |
 |:---:|:---:|
